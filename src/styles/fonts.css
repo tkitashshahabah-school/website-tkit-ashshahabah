@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ── Floating animation ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-8px) rotate(3deg); }
+}
+@keyframes float-reverse {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(10px); }
+}
+
+.float        { animation: float        4s ease-in-out infinite; }
+.float-slow   { animation: float-slow   6s ease-in-out infinite; }
+.float-reverse{ animation: float-reverse 5s ease-in-out infinite; }
+
+/* ── AOS custom easing ── */
+
+/* ── Card hover lift ── */
+.card-hover {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+}
+
+/* ── Photo hover lift ── */
+.photo-hover {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+}
+.photo-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+/* ── Visi Misi card hover ── */
+.visi-misi-hover {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: default;
+}
+.visi-misi-hover:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.22);
+}
