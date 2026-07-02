@@ -129,9 +129,8 @@ export default function App() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div className="text-center lg:text-left space-y-6" data-aos="fade-right">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full" style={{ background: 'rgba(39, 88, 59, 0.1)' }}>
-                <span className="text-sm font-semibold" style={{ color: '#27583B' }}>{tr.hero_badge}</span>
-              </div>
+              {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full" style={{ background: 'rgba(39, 88, 59, 0.1)' }}>
+              </div>  */}
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
                 <span style={{ color: '#27583B' }}>{tr.hero_title1}</span>
@@ -205,9 +204,6 @@ export default function App() {
             <div data-aos="fade-right" data-aos-duration="700">
               <div className="space-y-6">
                 <div className="inline-block">
-                  <span className="px-4 py-2 rounded-full text-sm font-semibold" style={{ background: 'rgba(236, 95, 45, 0.1)', color: '#EC5F2D' }}>
-                    {tr.about_badge}
-                  </span>
                 </div>
 
                 <h2 className="text-3xl sm:text-4xl font-bold" style={{ color: '#27583B' }}>
@@ -315,9 +311,6 @@ export default function App() {
           <div data-aos="fade-up">
             <div className="text-center mb-12">
               <div className="inline-block mb-4">
-                <span className="px-4 py-2 rounded-full text-sm font-semibold" style={{ background: 'rgba(39, 88, 59, 0.1)', color: '#27583B' }}>
-                  {tr.facility_badge}
-                </span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: '#27583B' }}>{tr.facility_title}</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">{tr.facility_desc}</p>
@@ -452,7 +445,8 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: '#27583B' }}>Berita & Pengumuman</h2>
-            <p className="text-gray-600">Informasi terkini seputar kegiatan sekolah</p>
+            <p className="text-g
+          ray-600">Informasi terkini seputar kegiatan sekolah</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -11,7 +11,6 @@ export const t = {
     nav_register: 'Daftar Sekarang',
 
     // Hero
-    hero_badge: 'Sekolah Islam Terpadu',
     hero_title1: 'Tumbuh Cerdas,',
     hero_title2: 'Berakhlak Mulia',
     hero_desc: 'TKIT Ash-Shahabah hadir untuk mendampingi putra-putri Anda dalam masa pertumbuhan dengan pendidikan Islam yang menyenangkan dan berkualitas.',
@@ -25,7 +24,6 @@ export const t = {
     feat_potential: 'Potensi Berkembang',
 
     // About
-    about_badge: '🎓 Tentang Kami',
     about_title: 'Sekolah Islam Terpadu Terbaik untuk Buah Hati Anda',
     about_p1: 'TKIT Ash-Shahabah adalah lembaga pendidikan anak usia dini yang berdiri sejak tahun 2010 di Bekasi. Kami hadir untuk memberikan pendidikan terbaik dengan menggabungkan kurikulum nasional dan nilai-nilai keislaman.',
     about_p2: 'Dengan tenaga pendidik yang profesional dan berpengalaman, kami berkomitmen untuk menciptakan generasi yang cerdas, berakhlak mulia, dan siap menghadapi tantangan masa depan.',
@@ -41,7 +39,6 @@ export const t = {
     mission_4: 'Membantu peserta didik dalam mempersiapkan kejenjang pendidikan berikutnya.',
 
     // Fasilitas
-    facility_badge: '🏫 Fasilitas Sekolah',
     facility_title: 'Fasilitas Lengkap untuk Tumbuh Kembang Optimal',
     facility_desc: 'Kami menyediakan lingkungan belajar yang nyaman, aman, dan menyenangkan untuk mendukung perkembangan anak secara menyeluruh',
     facility_playground: 'Area Bermain Outdoor',
