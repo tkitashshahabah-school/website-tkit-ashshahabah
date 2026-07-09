@@ -1,7 +1,7 @@
 import { Phone, MapPin, Instagram, Youtube, Menu, X, Star, Heart, Award, Users, BookOpen, Smile, Dumbbell, Sprout, ChevronLeft, ChevronRight } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { useState, useEffect, useRef } from 'react';
-import { t, Lang } from './translations';
+import { useTranslation } from 'react-i18next';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import logoTK from '../imports/logo_tk.webp';
@@ -41,32 +41,28 @@ import paromdonImage from '../imports/paromdon.webp';
 // ─── Teacher Data ─────────────────────────────────────────────────────────────
 // TODO: Perbarui dengan nama asli Kepala Sekolah dan para guru
 const KEPALA_SEKOLAH = {
-  name: 'Murtiasih, S.Pd.',
-  title: 'Kepala Sekolah TKIT Ash-Shahabah',
-  quote: 'Setiap anak adalah bintang yang bersinar dengan caranya sendiri. Di sini, kami hadir dengan sepenuh hati untuk membantu cahaya itu terpancar melalui pendidikan yang penuh kasih sayang, ilmu bermanfaat, dan nilai-nilai Islam yang mulia.',
   photo: bumurtiImage,
   initials: 'M'
 };
 
-const TEACHERS: { name: string; initials: string; color: string; photo?: any; role?: string }[] = [
-  { name: 'Suwastini', initials: 'S', color: '#EC5F2D', photo: butiniImage },
-  { name: 'Fitriawati, S.Pd.I.', initials: 'FA', color: '#27583B', photo: buftriImage },
-  { name: 'Sari Wahyuni', initials: 'RM', color: '#4E9D6A', photo: busariImage },
-  { name: 'Riri Priyanti, S.Pd.', initials: 'G1', color: '#27583B', photo: buririImage },
-  { name: 'Oktaviani Choirotun Nisa S.Pd', initials: 'G2', color: '#EC5F2D', photo: bunisaImage },
-  { name: 'Siti Maulanah S.sos', initials: 'G3', color: '#4E9D6A', photo: bulalaImage },
-  { name: 'Alifia Fathihah Rahma', initials: 'G4', color: '#D4882A', photo: bualifiaImage },
-  { name: 'Romdon', initials: 'OB', color: '#27583B', photo: paromdonImage },
+const TEACHERS: { name: string; initials: string; color: string; photo?: any; roleKey?: string }[] = [
+  { name: 'Suwastini', initials: 'S', color: '#EC5F2D', photo: butiniImage, roleKey: 'role_wali_kelas_b_utsman' },
+  { name: 'Fitriawati, S.Pd.I.', initials: 'FA', color: '#27583B', photo: buftriImage, roleKey: 'role_wali_kelas_b_umar' },
+  { name: 'Sari Wahyuni', initials: 'RM', color: '#4E9D6A', photo: busariImage, roleKey: 'role_wali_kelas_a_ali' },
+  { name: 'Riri Priyanti, S.Pd.', initials: 'G1', color: '#27583B', photo: buririImage, roleKey: 'role_wali_kelas_b_ubaidillah' },
+  { name: 'Oktaviani Choirotun Nisa S.Pd', initials: 'G2', color: '#EC5F2D', photo: bunisaImage, roleKey: 'role_guru_pendamping_a_ali' },
+  { name: 'Siti Maulanah S.sos', initials: 'G3', color: '#4E9D6A', photo: bulalaImage, roleKey: 'role_guru_pendamping_b_utsman' },
+  { name: 'Alifia Fathihah Rahma', initials: 'G4', color: '#D4882A', photo: bualifiaImage, roleKey: 'role_guru_pendamping_b_umar' },
+  { name: 'Romdon', initials: 'OB', color: '#27583B', photo: paromdonImage, roleKey: 'role_office_boy' },
 ];
 
 // ─── Main App ─────────────────────────────────────────────────────────────────
 export default function App() {
+  const { t, i18n } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<{ src: string | any | (string | any)[]; title: string; currentIndex?: number; isProfile?: boolean } | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [lang, setLang] = useState<Lang>('id');
   const [activeSection, setActiveSection] = useState('beranda');
-  const tr = t[lang];
 
   useEffect(() => {
     AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 80 });
@@ -111,7 +107,7 @@ export default function App() {
 
   useEffect(() => {
     setTimeout(() => AOS.refreshHard(), 50);
-  }, [lang]);
+  }, [i18n.language]);
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -140,11 +136,11 @@ export default function App() {
 
             <nav className="hidden lg:flex items-center gap-6">
               {[
-                { name: tr.nav_home, id: 'beranda' },
-                { name: tr.nav_about, id: 'tentang' },
-                { name: tr.nav_facility, id: 'fasilitas' },
-                { name: tr.nav_activity, id: 'kegiatan' },
-                { name: tr.nav_faq, id: 'faq' },
+                { name: t('nav_home'), id: 'beranda' },
+                { name: t('nav_about'), id: 'tentang' },
+                { name: t('nav_facility'), id: 'fasilitas' },
+                { name: t('nav_activity'), id: 'kegiatan' },
+                { name: t('nav_faq'), id: 'faq' },
               ].map((item) => (
                 <a
                   key={item.name}
@@ -161,7 +157,7 @@ export default function App() {
                   {item.name}
                 </a>
               ))}
-              <LangToggle lang={lang} setLang={setLang} />
+              <LangToggle />
             </nav>
 
             <a
@@ -171,7 +167,7 @@ export default function App() {
               className="hidden lg:block px-6 py-2.5 rounded-full font-semibold text-white shadow-md hover:shadow-lg transition-all transform hover:scale-105 text-center text-sm"
               style={{ background: 'linear-gradient(135deg, #EC5F2D 0%, #FFA45B 100%)', fontFamily: 'Nunito, sans-serif' }}
             >
-              {tr.nav_register}
+              {t('nav_register')}
             </a>
 
             <button className="lg:hidden p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -184,11 +180,11 @@ export default function App() {
           <div className="lg:hidden bg-white border-t border-gray-100">
             <nav className="px-4 py-4 space-y-1">
               {[
-                { name: tr.nav_home, id: 'beranda' },
-                { name: tr.nav_about, id: 'tentang' },
-                { name: tr.nav_facility, id: 'fasilitas' },
-                { name: tr.nav_activity, id: 'kegiatan' },
-                { name: tr.nav_faq, id: 'faq' },
+                { name: t('nav_home'), id: 'beranda' },
+                { name: t('nav_about'), id: 'tentang' },
+                { name: t('nav_facility'), id: 'fasilitas' },
+                { name: t('nav_activity'), id: 'kegiatan' },
+                { name: t('nav_faq'), id: 'faq' },
               ].map((item) => (
                 <a
                   key={item.name}
@@ -203,7 +199,7 @@ export default function App() {
                   {item.name}
                 </a>
               ))}
-              <div className="px-4 pt-2"><LangToggle lang={lang} setLang={setLang} /></div>
+              <div className="px-4 pt-2"><LangToggle /></div>
               <a
                 href="https://wa.link/pjcbpj"
                 target="_blank"
@@ -211,7 +207,7 @@ export default function App() {
                 className="block w-full px-6 py-3 rounded-full font-semibold text-white shadow-md mt-4 text-center"
                 style={{ background: 'linear-gradient(135deg, #EC5F2D 0%, #FFA45B 100%)' }}
               >
-                {tr.nav_register}
+                {t('nav_register')}
               </a>
             </nav>
           </div>
@@ -245,13 +241,13 @@ export default function App() {
             {/* Left Content */}
             <div className="text-center lg:text-left space-y-6" data-aos="fade-right">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight" style={{ fontFamily: 'Nunito, sans-serif' }}>
-                <span style={{ color: '#27583B' }}>{tr.hero_title1}</span>
+                <span style={{ color: '#27583B' }}>{t('hero_title1')}</span>
                 <br />
-                <span style={{ color: '#EC5F2D' }}>{tr.hero_title2}</span>
+                <span style={{ color: '#EC5F2D' }}>{t('hero_title2')}</span>
               </h1>
 
               <p className="text-gray-600 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
-                {tr.hero_desc}
+                {t('hero_desc')}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -261,7 +257,7 @@ export default function App() {
                   className="px-8 py-3.5 rounded-full font-semibold text-white shadow-md hover:shadow-lg transition-all transform hover:scale-105 text-center"
                   style={{ background: '#27583B', fontFamily: 'Nunito, sans-serif' }}
                 >
-                  {tr.hero_btn_about}
+                  {t('hero_btn_about')}
                 </a>
               </div>
             </div>
@@ -286,9 +282,9 @@ export default function App() {
           </div>
         </div>
 
-        {/* Wave Divider */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 100" className="w-full h-auto" fill="#FFFFFF">
+        {/* Wave Divider Bottom */}
+        <div className="absolute bottom-0 left-0 right-0" style={{ zIndex: 1 }}>
+          <svg viewBox="0 0 1440 100" className="w-full h-auto" fill="#FFFFFF" preserveAspectRatio="none">
             <path d="M0,50 Q360,10 720,50 T1440,50 L1440,100 L0,100 Z"></path>
           </svg>
         </div>
@@ -303,17 +299,23 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-8">
             {[
-              { icon: <BookOpen className="w-7 h-7" strokeWidth={1.75} />, title: tr.feat_learn, color: '#EC5F2D' },
-              { icon: <Users className="w-7 h-7" strokeWidth={1.75} />, title: tr.feat_teacher, color: '#27583B' },
-              { icon: <Award className="w-7 h-7" strokeWidth={1.75} />, title: tr.feat_akhlak, color: '#D4882A' },
-              { icon: <Heart className="w-7 h-7" strokeWidth={1.75} />, title: tr.feat_environment, color: '#EC5F2D' },
-              { icon: <Smile className="w-7 h-7" strokeWidth={1.75} />, title: tr.feat_potential, color: '#27583B' },
+              { icon: <BookOpen className="w-7 h-7" strokeWidth={1.75} />, title: t('feat_learn'), color: '#EC5F2D' },
+              { icon: <Users className="w-7 h-7" strokeWidth={1.75} />, title: t('feat_teacher'), color: '#27583B' },
+              { icon: <Award className="w-7 h-7" strokeWidth={1.75} />, title: t('feat_akhlak'), color: '#D4882A' },
+              { icon: <Heart className="w-7 h-7" strokeWidth={1.75} />, title: t('feat_environment'), color: '#EC5F2D' },
+              { icon: <Smile className="w-7 h-7" strokeWidth={1.75} />, title: t('feat_potential'), color: '#27583B' },
             ].map((item, i) => (
               <div key={item.title} data-aos="fade-up" data-aos-delay={i * 80}>
                 <FeatureCard icon={item.icon} title={item.title} color={item.color} />
               </div>
             ))}
           </div>
+        </div>
+        {/* Wave Divider Bottom */}
+        <div className="absolute bottom-0 left-0 right-0" style={{ zIndex: 1 }}>
+          <svg viewBox="0 0 1440 100" className="w-full h-12 sm:h-20" fill="#FFF7EE" preserveAspectRatio="none">
+            <path d="M0,50 Q360,10 720,50 T1440,50 L1440,100 L0,100 Z"></path>
+          </svg>
         </div>
       </section>
 
@@ -324,11 +326,11 @@ export default function App() {
             <div data-aos="fade-right" data-aos-duration="700">
               <div className="space-y-6">
                 <h2 className="text-3xl sm:text-4xl font-bold" style={{ color: '#27583B', fontFamily: 'Nunito, sans-serif' }}>
-                  {tr.about_title}
+                  {t('about_title')}
                 </h2>
                 <div className="space-y-4 text-gray-600 leading-relaxed text-[15px]">
-                  <p>{tr.about_p1}</p>
-                  <p>{tr.about_p2}</p>
+                  <p>{t('about_p1')}</p>
+                  <p>{t('about_p2')}</p>
                 </div>
                 <a
                   href="#tentang"
@@ -336,7 +338,7 @@ export default function App() {
                   className="inline-block px-8 py-3.5 rounded-full font-semibold text-white shadow-md hover:shadow-lg transition-all transform hover:scale-105 text-center"
                   style={{ background: 'linear-gradient(135deg, #EC5F2D 0%, #FFA45B 100%)', fontFamily: 'Nunito, sans-serif' }}
                 >
-                  {tr.about_btn}
+                  {t('about_btn')}
                 </a>
               </div>
             </div>
@@ -344,12 +346,23 @@ export default function App() {
             <div data-aos="fade-left" data-aos-duration="700">
               <div className="relative">
                 <div className="absolute -top-4 -left-4 w-full h-full rounded-3xl opacity-12" style={{ background: '#27583B' }}></div>
+                
+                {/* Decorative overlapping circles from Hero */}
+                <div className="absolute -top-6 -right-6 w-28 sm:w-32 h-28 sm:h-32 rounded-full opacity-35 float" style={{ background: 'linear-gradient(135deg, #FFA45B 0%, #EC5F2D 100%)', zIndex: 1 }}></div>
+
                 <img
                   src={fotosekolahImage}
                   alt="TKIT Ash-Shahabah"
                   className="photo-hover relative w-full h-auto rounded-3xl shadow-2xl"
                   onClick={() => setSelectedImage({ src: fotosekolahImage, title: 'Tentang Kami' })}
+                  style={{ zIndex: 2 }}
                 />
+
+                <div className="absolute -top-4 -right-4 w-14 sm:w-16 h-14 sm:h-16 float-slow" style={{ zIndex: 3 }}>
+                  <div className="w-full h-full rounded-full flex items-center justify-center" style={{ background: '#FFA45B' }}>
+                    <div className="w-7 sm:w-8 h-7 sm:h-8 rounded-full" style={{ background: '#EC5F2D' }}></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -357,24 +370,60 @@ export default function App() {
       </section>
 
       {/* ═══ MENGENAL PENDIDIK KAMI ══════════════════════════════════════════ */}
-      <section id="pendidik" className="py-20 sm:py-28 relative overflow-hidden" style={{ background: '#F0F7F3' }}>
+      <section id="pendidik" className="py-24 sm:py-32 relative overflow-hidden" style={{ background: '#FFF7EE' }}>
+
         {/* Floating Cartoon Decorations */}
-        <div className="floating-deco absolute right-12 bottom-20 deco-float-b" style={{ zIndex: 0, pointerEvents: 'none', opacity: 0.40 }}>
-          <StarIllustration color="#27583B" size={45} />
+        <div className="absolute top-16 left-12 w-10 h-10 opacity-50 float" style={{ zIndex: 0 }}>
+          <Star className="w-full h-full" style={{ color: '#FFA45B' }} fill="#FFA45B" />
         </div>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="absolute top-24 right-20 w-8 h-8 opacity-40 float-slow" style={{ zIndex: 0 }}>
+          <div className="w-full h-full rounded-full" style={{ background: '#EC5F2D' }}></div>
+        </div>
+        <div className="absolute bottom-32 left-1/4 w-8 h-8 opacity-40 float-reverse" style={{ zIndex: 0 }}>
+          <Heart className="w-full h-full" style={{ color: '#27583B' }} fill="#27583B" />
+        </div>
+        <div className="floating-deco absolute right-12 bottom-28 deco-float-b" style={{ zIndex: 0, pointerEvents: 'none', opacity: 0.50 }}>
+          <StarIllustration color="#27583B" size={40} />
+        </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative" style={{ zIndex: 2 }}>
           <div data-aos="fade-up">
             <div className="text-center mb-14">
               <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: '#27583B', fontFamily: 'Nunito, sans-serif' }}>
-                Mengenal Pendidik Kami
+                {t('teacher_section_title')}
               </h2>
               <p className="text-gray-500 max-w-2xl mx-auto text-[15px] leading-relaxed">
-                Tenaga pendidik kami yang profesional dan berdedikasi siap mendampingi putra-putri Anda tumbuh dan berkembang dengan penuh kasih sayang
+                {t('teacher_section_desc')}
               </p>
               <div className="w-20 h-1 mx-auto rounded-full mt-4" style={{ background: 'linear-gradient(135deg, #EC5F2D 0%, #FFA45B 100%)' }}></div>
             </div>
           </div>
+
+          {/* Kepala Sekolah Card (Statis) */}
+          <div className="mb-16 max-w-4xl mx-auto px-4" data-aos="fade-up" data-aos-delay="100">
+             <div className="rounded-3xl p-6 sm:p-10 flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-10 shadow-2xl" style={{ background: '#085041' }}>
+                <div className="flex-shrink-0">
+                   {KEPALA_SEKOLAH.photo ? (
+                      <img src={KEPALA_SEKOLAH.photo} alt="Murtiasih, S.Pd." className="w-[130px] h-[130px] rounded-full object-cover shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300" style={{ border: '4px solid rgba(255,255,255,0.15)' }} onClick={() => setSelectedImage({ src: KEPALA_SEKOLAH.photo, title: "Murtiasih, S.Pd.", isProfile: true })} />
+                   ) : (
+                      <div className="w-[130px] h-[130px] rounded-full flex items-center justify-center text-4xl font-black shadow-lg" style={{ background: 'rgba(255,255,255,0.1)', border: '4px solid rgba(255,255,255,0.15)', color: 'white' }}>{KEPALA_SEKOLAH.initials}</div>
+                   )}
+                </div>
+                <div className="text-center sm:text-left flex-1 mt-2">
+                   <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Nunito, sans-serif' }}>Murtiasih, S.Pd.</h3>
+                   <p className="text-sm sm:text-base font-bold uppercase tracking-widest mb-4" style={{ color: '#5DCAA5' }}>{t('principal_title')}</p>
+                   <p className="text-white text-[15px] sm:text-base leading-relaxed italic" style={{ opacity: 0.9 }}>"{t('principal_quote')}"</p>
+                </div>
+             </div>
+          </div>
+
           <TeacherSlider onImageClick={(src, title) => setSelectedImage({ src, title, isProfile: true })} />
+        </div>
+
+        {/* Wave Divider Bottom */}
+        <div className="absolute bottom-0 left-0 right-0" style={{ zIndex: 1 }}>
+          <svg viewBox="0 0 1440 100" className="w-full h-12 sm:h-20" fill="#FFFFFF" preserveAspectRatio="none">
+            <path d="M0,50 Q360,10 720,50 T1440,50 L1440,100 L0,100 Z"></path>
+          </svg>
         </div>
       </section>
 
@@ -388,8 +437,8 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative" style={{ zIndex: 1 }}>
           <div data-aos="fade-up" data-aos-duration="600">
             <div className="text-center mb-14">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: '#27583B', fontFamily: 'Nunito, sans-serif' }}>Visi & Misi</h2>
-              <p className="text-gray-500 max-w-2xl mx-auto text-[15px]">Pondasi utama kami dalam mendidik generasi masa depan yang cerdas dan berakhlak mulia</p>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: '#27583B', fontFamily: 'Nunito, sans-serif' }}>{t('vision_mission_title')}</h2>
+              <p className="text-gray-500 max-w-2xl mx-auto text-[15px]">{t('vision_mission_desc')}</p>
               <div className="w-20 h-1 mx-auto rounded-full mt-4" style={{ background: 'linear-gradient(135deg, #EC5F2D 0%, #FFA45B 100%)' }}></div>
             </div>
           </div>
@@ -409,10 +458,10 @@ export default function App() {
                     <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ background: 'rgba(255, 255, 255, 0.15)' }}>
                       <Star className="w-7 h-7 text-white" strokeWidth={1.75} fill="white" />
                     </div>
-                    <h3 className="text-2xl font-bold text-white" style={{ fontFamily: 'Nunito, sans-serif' }}>{tr.vision}</h3>
+                    <h3 className="text-2xl font-bold text-white" style={{ fontFamily: 'Nunito, sans-serif' }}>{t('vision')}</h3>
                   </div>
                   <p className="text-white text-base sm:text-lg leading-relaxed font-medium">
-                    {tr.vision_text}
+                    {t('vision_text')}
                   </p>
                 </div>
               </div>
@@ -432,10 +481,10 @@ export default function App() {
                     <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ background: 'rgba(255, 255, 255, 0.15)' }}>
                       <Award className="w-7 h-7 text-white" strokeWidth={1.75} fill="white" />
                     </div>
-                    <h3 className="text-2xl font-bold text-white" style={{ fontFamily: 'Nunito, sans-serif' }}>{tr.mission}</h3>
+                    <h3 className="text-2xl font-bold text-white" style={{ fontFamily: 'Nunito, sans-serif' }}>{t('mission')}</h3>
                   </div>
                   <ul className="space-y-3.5 text-white">
-                    {[tr.mission_1, tr.mission_2, tr.mission_3, tr.mission_4].map((m, i) => (
+                    {[t('mission_1'), t('mission_2'), t('mission_3'), t('mission_4')].map((m, i) => (
                       <li key={i} className="flex items-start gap-3">
                         <span
                           className="flex-shrink-0 w-6 h-6 rounded-full bg-white flex items-center justify-center text-xs font-bold"
@@ -456,6 +505,12 @@ export default function App() {
 
       {/* ═══ FASILITAS SECTION ══════════════════════════════════════════════ */}
       <section id="fasilitas" className="py-20 sm:py-28 relative overflow-hidden" style={{ background: '#FFF7EE' }}>
+        {/* Wave Divider Top */}
+        <div className="absolute top-0 left-0 right-0 transform rotate-180" style={{ zIndex: 1 }}>
+          <svg viewBox="0 0 1440 100" className="w-full h-12 sm:h-20" fill="#FFFFFF" preserveAspectRatio="none">
+            <path d="M0,50 Q360,10 720,50 T1440,50 L1440,100 L0,100 Z"></path>
+          </svg>
+        </div>
         {/* Floating Decorations */}
         <div className="floating-deco absolute left-12 bottom-20 deco-float-d" style={{ zIndex: 0, pointerEvents: 'none', opacity: 0.15 }}>
           <Heart className="w-14 h-14" style={{ color: '#27583B' }} fill="#27583B" />
@@ -463,8 +518,8 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div data-aos="fade-up">
             <div className="text-center mb-14">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: '#27583B', fontFamily: 'Nunito, sans-serif' }}>{tr.facility_title}</h2>
-              <p className="text-gray-500 max-w-2xl mx-auto text-[15px]">{tr.facility_desc}</p>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: '#27583B', fontFamily: 'Nunito, sans-serif' }}>{t('facility_title')}</h2>
+              <p className="text-gray-500 max-w-2xl mx-auto text-[15px]">{t('facility_desc')}</p>
               <div className="w-20 h-1 mx-auto rounded-full mt-4" style={{ background: 'linear-gradient(135deg, #EC5F2D 0%, #FFA45B 100%)' }}></div>
             </div>
           </div>
@@ -472,27 +527,27 @@ export default function App() {
           <div className="grid lg:grid-cols-3 gap-8">
             <FasilitasPhotoCard
               image={areaOutdoorImage}
-              title={tr.facility_playground}
+              title={t('facility_playground')}
               icon={<Dumbbell className="w-5 h-5" strokeWidth={1.75} />}
               color="#27583B"
               large
-              onClick={() => setSelectedImage({ src: areaOutdoorImage, title: tr.facility_playground })}
+              onClick={() => setSelectedImage({ src: areaOutdoorImage, title: t('facility_playground') })}
             />
             <FasilitasPhotoCard
               image={areaKelasImage}
-              title={tr.facility_classroom}
+              title={t('facility_classroom')}
               icon={<BookOpen className="w-5 h-5" strokeWidth={1.75} />}
               color="#EC5F2D"
               large
-              onClick={() => setSelectedImage({ src: areaKelasImage, title: tr.facility_classroom })}
+              onClick={() => setSelectedImage({ src: areaKelasImage, title: t('facility_classroom') })}
             />
             <FasilitasSliderCard
               images={[areaLapanganImage, halamansekolahImage]}
-              title={tr.facility_field}
+              title={t('facility_field')}
               icon={<Sprout className="w-5 h-5" strokeWidth={1.75} />}
               color="#27583B"
               onImageClick={(i) => {
-                setSelectedImage({ src: [areaLapanganImage, halamansekolahImage], title: tr.facility_field, currentIndex: i });
+                setSelectedImage({ src: [areaLapanganImage, halamansekolahImage], title: t('facility_field'), currentIndex: i });
                 setLightboxIndex(i);
               }}
             />
@@ -501,13 +556,19 @@ export default function App() {
       </section>
 
       {/* ═══ ACTIVITIES SECTION ══════════════════════════════════════════════ */}
-      <section id="kegiatan" className="py-20 sm:py-28 relative overflow-hidden" style={{ background: '#FFF7EE' }}>
+      <section id="kegiatan" className="py-20 sm:py-28 bg-white relative overflow-hidden">
+        {/* Wave Divider Top */}
+        <div className="absolute top-0 left-0 right-0 transform rotate-180" style={{ zIndex: 1 }}>
+          <svg viewBox="0 0 1440 100" className="w-full h-12 sm:h-20" fill="#FFF7EE" preserveAspectRatio="none">
+            <path d="M0,50 Q360,10 720,50 T1440,50 L1440,100 L0,100 Z"></path>
+          </svg>
+        </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative" style={{ zIndex: 1 }}>
           <div data-aos="fade-up">
             <div className="text-center mb-14">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: '#27583B', fontFamily: 'Nunito, sans-serif' }}>{tr.activity_title}</h2>
-              <p className="text-gray-500 max-w-2xl mx-auto text-[15px]">{tr.activity_desc}</p>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: '#27583B', fontFamily: 'Nunito, sans-serif' }}>{t('activity_title')}</h2>
+              <p className="text-gray-500 max-w-2xl mx-auto text-[15px]">{t('activity_desc')}</p>
               <div className="w-20 h-1 mx-auto rounded-full mt-4" style={{ background: 'linear-gradient(135deg, #EC5F2D 0%, #FFA45B 100%)' }}></div>
             </div>
           </div>
@@ -515,45 +576,45 @@ export default function App() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <ActivityCard
               image={jurnalPagiImage}
-              title={tr.activity_jurnal}
-              tag={tr.activity_jurnal_tag}
-              onClick={() => setSelectedImage({ src: jurnalPagiImage, title: tr.activity_jurnal })}
+              title={t('activity_jurnal')}
+              tag={t('activity_jurnal_tag')}
+              onClick={() => setSelectedImage({ src: jurnalPagiImage, title: t('activity_jurnal') })}
             />
             <ActivityCard
               image={KunjunganEdukasiImage}
-              title={tr.activity_kunjungan}
-              tag={tr.activity_kunjungan_tag}
-              onClick={() => setSelectedImage({ src: KunjunganEdukasiImage, title: tr.activity_kunjungan })}
+              title={t('activity_kunjungan')}
+              tag={t('activity_kunjungan_tag')}
+              onClick={() => setSelectedImage({ src: KunjunganEdukasiImage, title: t('activity_kunjungan') })}
             />
             <ActivityCard
               image={RihlahImage}
-              title={tr.activity_rihlah}
-              tag={tr.activity_rihlah_tag}
-              onClick={() => setSelectedImage({ src: RihlahImage, title: tr.activity_rihlah })}
+              title={t('activity_rihlah')}
+              tag={t('activity_rihlah_tag')}
+              onClick={() => setSelectedImage({ src: RihlahImage, title: t('activity_rihlah') })}
             />
             <ActivityCard
               image={SholatDhuhaImage}
-              title={tr.activity_sholat}
-              tag={tr.activity_sholat_tag}
-              onClick={() => setSelectedImage({ src: SholatDhuhaImage, title: tr.activity_sholat })}
+              title={t('activity_sholat')}
+              tag={t('activity_sholat_tag')}
+              onClick={() => setSelectedImage({ src: SholatDhuhaImage, title: t('activity_sholat') })}
             />
             <ActivitySliderCard
               images={[KreativitasImage, kreatif1Image, kreatif3Image, kreatif1Image, kreatif5Image]}
-              title={tr.activity_kreativitas}
-              tag={tr.activity_kreativitas_tag}
+              title={t('activity_kreativitas')}
+              tag={t('activity_kreativitas_tag')}
               onImageClick={(i) => {
                 const imgs = [KreativitasImage, kreatif1Image, kreatif3Image, kreatif1Image, kreatif5Image];
-                setSelectedImage({ src: imgs, title: tr.activity_kreativitas, currentIndex: i });
+                setSelectedImage({ src: imgs, title: t('activity_kreativitas'), currentIndex: i });
                 setLightboxIndex(i);
               }}
             />
             <ActivitySliderCard
               images={[MarketDayImage, marketday1Image, marketday2Image, marketday3Image, marketday4Image, marketday5Image]}
-              title={tr.activity_marketday}
-              tag={tr.activity_marketday_tag}
+              title={t('activity_marketday')}
+              tag={t('activity_marketday_tag')}
               onImageClick={(i) => {
                 const imgs = [MarketDayImage, marketday1Image, marketday2Image, marketday3Image, marketday4Image, marketday5Image];
-                setSelectedImage({ src: imgs, title: tr.activity_marketday, currentIndex: i });
+                setSelectedImage({ src: imgs, title: t('activity_marketday'), currentIndex: i });
                 setLightboxIndex(i);
               }}
             />
@@ -562,7 +623,13 @@ export default function App() {
       </section>
 
       {/* ═══ FAQ SECTION ═════════════════════════════════════════════════════ */}
-      <section id="faq" className="py-20 sm:py-28 bg-white relative overflow-hidden">
+      <section id="faq" className="py-20 sm:py-28 relative overflow-hidden" style={{ background: '#FFF7EE' }}>
+        {/* Wave Divider Top */}
+        <div className="absolute top-0 left-0 right-0 transform rotate-180" style={{ zIndex: 1 }}>
+          <svg viewBox="0 0 1440 100" className="w-full h-12 sm:h-20" fill="#FFFFFF" preserveAspectRatio="none">
+            <path d="M0,50 Q360,10 720,50 T1440,50 L1440,100 L0,100 Z"></path>
+          </svg>
+        </div>
         {/* Floating Cartoon Decorations */}
         <div className="floating-deco absolute left-12 top-20 deco-float-c" style={{ zIndex: 0, pointerEvents: 'none', opacity: 0.40 }}>
           <StarIllustration color="#FFA45B" size={35} />
@@ -570,26 +637,26 @@ export default function App() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div data-aos="fade-up">
             <div className="text-center mb-14">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: '#27583B', fontFamily: 'Nunito, sans-serif' }}>{tr.faq_title}</h2>
-              <p className="text-gray-500 max-w-2xl mx-auto text-[15px]">Temukan jawaban atas pertanyaan yang sering ditanyakan orang tua</p>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: '#27583B', fontFamily: 'Nunito, sans-serif' }}>{t('faq_title')}</h2>
+              <p className="text-gray-500 max-w-2xl mx-auto text-[15px]">{t('faq_desc')}</p>
               <div className="w-20 h-1 mx-auto rounded-full mt-4" style={{ background: 'linear-gradient(135deg, #EC5F2D 0%, #FFA45B 100%)' }}></div>
             </div>
           </div>
 
           <div className="space-y-4">
             {[
-              { q: tr.faq_q1, a: tr.faq_a1 },
-              { q: tr.faq_q2, a: tr.faq_a2 },
-              { q: tr.faq_q3, a: tr.faq_a3 },
-              { q: tr.faq_q4, a: tr.faq_a4 },
-              { q: tr.faq_q5, a: tr.faq_a5 },
+              { q: t('faq_q1'), a: t('faq_a1') },
+              { q: t('faq_q2'), a: t('faq_a2') },
+              { q: t('faq_q3'), a: t('faq_a3') },
+              { q: t('faq_q4'), a: t('faq_a4') },
+              { q: t('faq_q5'), a: t('faq_a5') },
             ].map((item, i) => (
               <FAQItem key={i} question={item.q} answer={item.a} index={i} />
             ))}
           </div>
 
           <div className="mt-14 text-center" data-aos="fade-up" data-aos-delay="200">
-            <p className="text-gray-400 mb-6 text-[15px]">{tr.faq_contact}</p>
+            <p className="text-gray-400 mb-6 text-[15px]">{t('faq_contact')}</p>
             <a
               href="https://wa.link/pjcbpj"
               target="_blank"
@@ -598,7 +665,7 @@ export default function App() {
               style={{ background: 'linear-gradient(135deg, #EC5F2D 0%, #FFA45B 100%)', fontFamily: 'Nunito, sans-serif' }}
             >
               <WhatsAppIcon className="w-6 h-6 text-white" />
-              {tr.faq_wa}
+              {t('faq_wa')}
             </a>
           </div>
         </div>
@@ -621,7 +688,7 @@ export default function App() {
                     <p className="text-sm opacity-75">Bekasi</p>
                   </div>
                 </div>
-                <p className="text-sm opacity-85 mb-6 leading-relaxed">{tr.footer_tagline}</p>
+                <p className="text-sm opacity-85 mb-6 leading-relaxed">{t('footer_tagline')}</p>
                 <div className="flex gap-3 flex-wrap">
                   <SocialIcon icon={<TikTokIcon className="w-5 h-5" />} href="https://www.tiktok.com/@tkit.ash.shahabah" />
                   <SocialIcon icon={<Instagram className="w-5 h-5" />} href="https://www.instagram.com/tkit.ashshahabah" />
@@ -631,22 +698,22 @@ export default function App() {
               </div>
 
               <div>
-                <h4 className="font-bold text-lg mb-4" style={{ fontFamily: 'Nunito, sans-serif' }}>{tr.footer_menu}</h4>
+                <h4 className="font-bold text-lg mb-4" style={{ fontFamily: 'Nunito, sans-serif' }}>{t('footer_menu')}</h4>
                 <ul className="space-y-2 text-sm opacity-85">
-                  <li><a href="#" className="hover:opacity-100 transition-opacity">{tr.nav_home}</a></li>
-                  <li><a href="#tentang" className="hover:opacity-100 transition-opacity">{tr.nav_about}</a></li>
-                  <li><a href="#fasilitas" className="hover:opacity-100 transition-opacity">{tr.nav_facility}</a></li>
-                  <li><a href="#kegiatan" className="hover:opacity-100 transition-opacity">{tr.nav_activity}</a></li>
-                  <li><a href="#faq" className="hover:opacity-100 transition-opacity">{tr.nav_faq}</a></li>
+                  <li><a href="#" className="hover:opacity-100 transition-opacity">{t('nav_home')}</a></li>
+                  <li><a href="#tentang" className="hover:opacity-100 transition-opacity">{t('nav_about')}</a></li>
+                  <li><a href="#fasilitas" className="hover:opacity-100 transition-opacity">{t('nav_facility')}</a></li>
+                  <li><a href="#kegiatan" className="hover:opacity-100 transition-opacity">{t('nav_activity')}</a></li>
+                  <li><a href="#faq" className="hover:opacity-100 transition-opacity">{t('nav_faq')}</a></li>
                 </ul>
               </div>
 
               <div>
-                <h4 className="font-bold text-lg mb-4" style={{ fontFamily: 'Nunito, sans-serif' }}>{tr.footer_contact}</h4>
+                <h4 className="font-bold text-lg mb-4" style={{ fontFamily: 'Nunito, sans-serif' }}>{t('footer_contact')}</h4>
                 <ul className="space-y-3 text-sm opacity-85">
                   <li className="flex items-start gap-2">
                     <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                    <span>{tr.footer_address}</span>
+                    <span>{t('footer_address')}</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Phone className="w-5 h-5 flex-shrink-0" />
@@ -658,7 +725,7 @@ export default function App() {
           </div>
 
           <div className="border-t border-white/20 pt-8 text-center text-sm opacity-70">
-            <p>{tr.footer_copy}</p>
+            <p>{t('footer_copy')}</p>
           </div>
         </div>
       </footer>
@@ -708,14 +775,14 @@ export default function App() {
             )}
 
             <div className="max-w-5xl w-full flex flex-col items-center justify-center" onClick={(e) => e.stopPropagation()}>
-              <img 
-                src={imgSrc} 
-                alt={selectedImage.title} 
-                className={selectedImage.isProfile 
-                  ? "w-[85vw] max-w-[400px] aspect-square object-cover rounded-full shadow-2xl border-4" 
+              <img
+                src={imgSrc}
+                alt={selectedImage.title}
+                className={selectedImage.isProfile
+                  ? "w-[85vw] max-w-[400px] aspect-square object-cover rounded-full shadow-2xl border-4"
                   : "w-full h-auto max-h-[85vh] object-contain rounded-2xl"}
-                style={selectedImage.isProfile 
-                  ? { borderColor: 'rgba(255,255,255,0.15)', animation: 'scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards' } 
+                style={selectedImage.isProfile
+                  ? { borderColor: 'rgba(255,255,255,0.15)', animation: 'scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards' }
                   : {}}
               />
               <div className="flex items-center justify-center gap-3 mt-5" style={selectedImage.isProfile ? { animation: 'scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards' } : {}}>
@@ -749,56 +816,152 @@ export default function App() {
 // TEACHER SLIDER COMPONENT
 // ═════════════════════════════════════════════════════════════════════════════
 function TeacherSlider({ onImageClick }: { onImageClick?: (src: string, title: string) => void }) {
-  const slides = [
-    { type: 'principal' as const },
-    ...TEACHERS.map((_, i) => ({ type: 'teacher' as const, teacherIndex: i })),
-  ];
-
   const [current, setCurrent] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const resetTimer = () => {
+  const startTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
+      setCurrent((prev) => (prev + 1) % TEACHERS.length);
     }, 5000);
   };
 
   useEffect(() => {
-    resetTimer();
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+    startTimer();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, []);
 
-  const prev = () => { setCurrent((c) => (c === 0 ? slides.length - 1 : c - 1)); resetTimer(); };
-  const next = () => { setCurrent((c) => (c + 1) % slides.length); resetTimer(); };
+  const handleManualAction = (action: () => void) => {
+    action();
+    startTimer();
+  };
+
+  const prev = () => handleManualAction(() => setCurrent((c) => (c === 0 ? TEACHERS.length - 1 : c - 1)));
+  const next = () => handleManualAction(() => setCurrent((c) => (c + 1) % TEACHERS.length));
+  const goTo = (i: number) => handleManualAction(() => setCurrent(i));
+
+  const getCardState = (i: number) => {
+    let diff = (i - current) % TEACHERS.length;
+    if (diff < 0) diff += TEACHERS.length;
+    
+    if (diff === 0) return 'active';
+    if (diff === 1) return 'next1';
+    if (diff === TEACHERS.length - 1) return 'prev1';
+    
+    if (diff === 2) return 'hidden-next';
+    if (diff === TEACHERS.length - 2) return 'hidden-prev';
+    return 'hidden';
+  };
 
   return (
     <div className="relative" data-aos="fade-up" data-aos-duration="700">
+      <style>{`
+        .teacher-queue-container {
+           height: 480px;
+           perspective: 1000px;
+        }
+        .teacher-queue-card {
+           position: absolute;
+           width: 100%;
+           max-width: 280px; /* max desktop width */
+           left: 50%;
+           top: 0;
+           margin-left: -140px; /* half of max-width */
+           transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+           opacity: 0;
+           visibility: hidden;
+           transform: translateX(150px) scale(0.5);
+           z-index: 0;
+        }
+        .teacher-queue-card.state-active {
+           opacity: 1;
+           visibility: visible;
+           transform: translateX(0) scale(1);
+           z-index: 10;
+        }
+        .teacher-queue-card.state-active .inner-card {
+           box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+        }
+        .teacher-queue-card.state-next1 {
+           opacity: 0.4;
+           visibility: visible;
+           transform: translateX(240px) scale(0.85);
+           z-index: 9;
+        }
+        .teacher-queue-card.state-prev1 {
+           opacity: 0.4;
+           visibility: visible;
+           transform: translateX(-240px) scale(0.85);
+           z-index: 9;
+        }
+        .teacher-queue-card.state-hidden-next {
+           opacity: 0;
+           visibility: hidden;
+           transform: translateX(450px) scale(0.5);
+           z-index: 0;
+        }
+        .teacher-queue-card.state-hidden-prev {
+           opacity: 0;
+           visibility: hidden;
+           transform: translateX(-450px) scale(0.5);
+           z-index: 0;
+        }
+        .teacher-queue-card.state-hidden {
+           opacity: 0;
+           visibility: hidden;
+           transform: scale(0.5);
+           z-index: 0;
+        }
+        
+        @media (max-width: 640px) {
+           .teacher-queue-container {
+              height: 400px;
+           }
+           .teacher-queue-card {
+              max-width: clamp(240px, 80vw, 260px);
+              margin-left: calc(-0.5 * clamp(240px, 80vw, 260px));
+           }
+           .teacher-queue-card.state-next1 {
+              transform: translateX(120px) scale(0.85);
+              opacity: 0.4;
+           }
+           .teacher-queue-card.state-prev1 {
+              transform: translateX(-120px) scale(0.85);
+              opacity: 0.4;
+           }
+           .teacher-queue-card.state-hidden-next,
+           .teacher-queue-card.state-hidden-prev,
+           .teacher-queue-card.state-hidden {
+              transform: translateX(0) scale(0.5);
+              opacity: 0; 
+              visibility: hidden;
+           }
+        }
+      `}</style>
+      
       {/* Slides Container */}
-      <div className="relative rounded-3xl overflow-hidden" style={{ minHeight: '460px' }}>
-        {slides.map((slide, i) => (
-          <div
-            key={i}
-            className="absolute inset-0 transition-opacity duration-700 ease-in-out"
-            style={{
-              opacity: i === current ? 1 : 0,
-              zIndex: i === current ? 1 : 0,
-              pointerEvents: i === current ? 'auto' : 'none',
-            }}
-          >
-            {slide.type === 'principal' ? (
-              <PrincipalSlide onImageClick={onImageClick} />
-            ) : (
-              <TeacherSlideCard teacher={TEACHERS[slide.teacherIndex]} onImageClick={onImageClick} />
-            )}
-          </div>
-        ))}
+      <div 
+        className="relative overflow-hidden w-full teacher-queue-container"
+      >
+        {TEACHERS.map((teacher, i) => {
+          const state = getCardState(i);
+          return (
+            <div 
+              key={i} 
+              className={`teacher-queue-card state-${state}`}
+            >
+              <TeacherSlideCard teacher={teacher as any} index={i} onImageClick={onImageClick} />
+            </div>
+          );
+        })}
       </div>
 
       {/* Navigation Arrows — desktop */}
       <button
         onClick={prev}
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10 hidden sm:flex"
+        className="absolute -left-5 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10 hidden sm:flex"
         style={{ background: '#27583B' }}
         aria-label="Sebelumnya"
       >
@@ -806,7 +969,7 @@ function TeacherSlider({ onImageClick }: { onImageClick?: (src: string, title: s
       </button>
       <button
         onClick={next}
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10 hidden sm:flex"
+        className="absolute -right-5 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10 hidden sm:flex"
         style={{ background: '#27583B' }}
         aria-label="Berikutnya"
       >
@@ -832,11 +995,11 @@ function TeacherSlider({ onImageClick }: { onImageClick?: (src: string, title: s
       </div>
 
       {/* Dots Indicator */}
-      <div className="flex justify-center gap-2 mt-6">
-        {slides.map((_, i) => (
+      <div className="flex justify-center flex-wrap gap-2 mt-6">
+        {TEACHERS.map((_, i) => (
           <button
             key={i}
-            onClick={() => { setCurrent(i); resetTimer(); }}
+            onClick={() => goTo(i)}
             className="h-2.5 rounded-full transition-all duration-300"
             style={{
               width: i === current ? '28px' : '10px',
@@ -850,156 +1013,56 @@ function TeacherSlider({ onImageClick }: { onImageClick?: (src: string, title: s
   );
 }
 
-// ─── Principal Slide (Kepala Sekolah) ────────────────────────────────────────
-function PrincipalSlide({ onImageClick }: { onImageClick?: (src: string, title: string) => void }) {
-  return (
-    <div
-      className="w-full rounded-3xl overflow-hidden"
-      style={{ background: 'linear-gradient(140deg, #163825 0%, #1f4f33 45%, #27583B 100%)', minHeight: '460px' }}
-    >
-      <div className="grid md:grid-cols-2 h-full" style={{ minHeight: '460px' }}>
-        {/* Left — Avatar & Name */}
-        <div className="flex flex-col items-center justify-center p-8 sm:p-12 relative">
-          {/* Subtle background circles */}
-          <div className="absolute top-8 left-8 w-28 h-28 rounded-full" style={{ background: 'rgba(255,255,255,0.04)' }}></div>
-          <div className="absolute bottom-8 right-4 w-20 h-20 rounded-full" style={{ background: 'rgba(255,255,255,0.04)' }}></div>
-
-          {/* Avatar */}
-          <div className="relative mb-5">
-            {KEPALA_SEKOLAH.photo ? (
-              <img 
-                src={KEPALA_SEKOLAH.photo} 
-                alt={KEPALA_SEKOLAH.name} 
-                className="w-36 h-36 rounded-full object-cover shadow-2xl border-4 cursor-pointer hover:scale-105 transition-transform duration-300" 
-                style={{ borderColor: 'rgba(255,255,255,0.25)' }} 
-                onClick={() => onImageClick && onImageClick(KEPALA_SEKOLAH.photo, KEPALA_SEKOLAH.name)}
-              />
-            ) : (
-              <div
-                className="w-36 h-36 rounded-full flex items-center justify-center text-4xl font-black shadow-2xl border-4"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 100%)',
-                  borderColor: 'rgba(255,255,255,0.25)',
-                  color: 'white',
-                  fontFamily: 'Nunito, sans-serif',
-                  backdropFilter: 'blur(12px)',
-                }}
-              >
-                {KEPALA_SEKOLAH.initials}
-              </div>
-            )}
-            {/* Badge */}
-            <div
-              className="absolute -bottom-2 -right-2 w-11 h-11 rounded-full flex items-center justify-center shadow-lg"
-              style={{ background: '#EC5F2D' }}
-            >
-              <Star className="w-5 h-5 text-white" fill="white" />
-            </div>
-          </div>
-
-          {/* Name & Title */}
-          <h3 className="text-2xl font-bold text-white text-center mb-2" style={{ fontFamily: 'Nunito, sans-serif' }}>
-            {KEPALA_SEKOLAH.name}
-          </h3>
-          <span
-            className="px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase"
-            style={{ background: 'rgba(236,95,45,0.85)', color: 'white' }}
-          >
-            Kepala Sekolah
-          </span>
-        </div>
-
-        {/* Right — Kata Pengantar */}
-        <div
-          className="flex flex-col justify-center p-8 sm:p-12"
-          style={{ borderLeft: '1px solid rgba(255,255,255,0.12)' }}
-        >
-          <span
-            className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-5 uppercase tracking-widest"
-            style={{ background: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.85)' }}
-          >
-            Kata Pengantar Kepala Sekolah
-          </span>
-
-          {/* Decorative quote mark */}
-          <div
-            className="text-8xl leading-none mb-1 select-none"
-            style={{ color: 'rgba(255,255,255,0.12)', fontFamily: 'Georgia, serif', lineHeight: '1' }}
-          >
-            "
-          </div>
-
-          <p
-            className="text-white text-base sm:text-lg leading-relaxed -mt-5"
-            style={{ opacity: 0.95 }}
-          >
-            {KEPALA_SEKOLAH.quote}
-          </p>
-
-          <div className="mt-6 flex items-center gap-3">
-            <div className="h-px flex-1" style={{ background: 'rgba(255,255,255,0.18)' }}></div>
-            <span className="text-sm italic" style={{ color: 'rgba(255,255,255,0.6)' }}>— {KEPALA_SEKOLAH.name}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ─── Teacher Slide Card ───────────────────────────────────────────────────────
-function TeacherSlideCard({ teacher, onImageClick }: { teacher: typeof TEACHERS[0]; onImageClick?: (src: string, title: string) => void }) {
+const CARD_PALETTE = [
+  { bg: '#F0997B', text: '#4A1C0E', roleText: '#7A2E16' }, // Coral
+  { bg: '#FAC775', text: '#593C0C', roleText: '#8A5D13' }, // Amber
+  { bg: '#5DCAA5', text: '#12402F', roleText: '#1B634A' }, // Teal
+];
+
+function TeacherSlideCard({ teacher, index, onImageClick }: { teacher: typeof TEACHERS[0]; index: number; onImageClick?: (src: string, title: string) => void }) {
+  const { t } = useTranslation();
+  const palette = CARD_PALETTE[index % CARD_PALETTE.length];
+  
   return (
     <div
-      className="w-full rounded-3xl flex items-center justify-center p-8 sm:p-12"
-      style={{ background: 'white', minHeight: '460px', border: '1px solid #E4EDE8' }}
+      className="w-full rounded-3xl flex items-center justify-center px-8 py-10 sm:py-12 shadow-sm transition-shadow duration-300 inner-card"
+      style={{ background: palette.bg, minHeight: '380px' }}
     >
-      <div className="text-center max-w-xs mx-auto">
+      <div className="text-center w-full">
         {/* Avatar */}
-        <div className="relative inline-block mb-5">
+        <div className="relative inline-block mb-6">
           {teacher.photo ? (
-            <img 
-              src={teacher.photo} 
-              alt={teacher.name} 
-              className="w-36 h-36 rounded-full object-cover mx-auto shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300" 
-              style={{ border: `3px solid ${teacher.color}25` }} 
+            <img
+              src={teacher.photo}
+              alt={teacher.name}
+              className="w-[clamp(100px,25vw,150px)] h-[clamp(100px,25vw,150px)] rounded-full object-cover mx-auto shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300"
+              style={{ border: '3px solid rgba(255,255,255,0.4)' }}
               onClick={() => onImageClick && onImageClick(teacher.photo, teacher.name)}
             />
           ) : (
             <div
-              className="w-36 h-36 rounded-full flex items-center justify-center text-4xl font-black mx-auto shadow-lg"
+              className="w-[clamp(100px,25vw,150px)] h-[clamp(100px,25vw,150px)] rounded-full flex items-center justify-center text-5xl font-black mx-auto shadow-lg"
               style={{
-                background: `linear-gradient(135deg, ${teacher.color}20 0%, ${teacher.color}10 100%)`,
-                color: teacher.color,
+                background: 'rgba(255,255,255,0.2)',
+                color: palette.text,
                 fontFamily: 'Nunito, sans-serif',
-                border: `3px solid ${teacher.color}25`,
+                border: '3px solid rgba(255,255,255,0.4)',
               }}
             >
               {teacher.initials}
             </div>
           )}
-          <div
-            className="absolute -bottom-1.5 -right-1.5 w-10 h-10 rounded-full flex items-center justify-center shadow-md"
-            style={{ background: teacher.color }}
-          >
-            <BookOpen className="w-4 h-4 text-white" strokeWidth={2} />
-          </div>
         </div>
 
-        <h3 className="text-xl sm:text-2xl font-bold mb-2" style={{ color: '#1a3828', fontFamily: 'Nunito, sans-serif' }}>
+        <h3 className="text-2xl sm:text-3xl font-bold mb-1" style={{ color: palette.text, fontFamily: 'Nunito, sans-serif' }}>
           {teacher.name}
         </h3>
-        {teacher.role && (
-          <span
-            className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold"
-            style={{ background: `${teacher.color}12`, color: teacher.color }}
-          >
-            {teacher.role}
-          </span>
+        {teacher.roleKey && (
+          <p className="text-[15px] sm:text-base font-bold tracking-wide uppercase mt-2" style={{ color: palette.roleText }}>
+            {t(teacher.roleKey)}
+          </p>
         )}
-
-        <div className="mt-6 pt-6" style={{ borderTop: '1px solid #E4EDE8' }}>
-          <p className="text-gray-400 text-sm">TKIT Ash-Shahabah, Bekasi</p>
-        </div>
       </div>
     </div>
   );
@@ -1046,13 +1109,20 @@ function AboutSlider({ images, onImageClick }: { images: any[]; onImageClick?: (
   );
 }
 
-function LangToggle({ lang, setLang }: { lang: 'id' | 'en'; setLang: (l: 'id' | 'en') => void }) {
+function LangToggle() {
+  const { i18n } = useTranslation();
+  const lang = i18n.language || 'id';
+
+  const setLang = (l: 'id' | 'en') => {
+    i18n.changeLanguage(l);
+  };
+
   return (
     <div className="inline-flex items-center rounded-full overflow-hidden border-2 text-xs font-bold" style={{ borderColor: '#27583B' }}>
       <button
         onClick={() => setLang('en')}
         className="px-2.5 py-1 transition-all duration-200"
-        style={{ background: lang === 'en' ? '#27583B' : 'transparent', color: lang === 'en' ? 'white' : '#27583B' }}
+        style={{ background: lang.startsWith('en') ? '#27583B' : 'transparent', color: lang.startsWith('en') ? 'white' : '#27583B' }}
       >
         EN
       </button>
@@ -1060,7 +1130,7 @@ function LangToggle({ lang, setLang }: { lang: 'id' | 'en'; setLang: (l: 'id' | 
       <button
         onClick={() => setLang('id')}
         className="px-2.5 py-1 transition-all duration-200"
-        style={{ background: lang === 'id' ? '#27583B' : 'transparent', color: lang === 'id' ? 'white' : '#27583B' }}
+        style={{ background: lang.startsWith('id') ? '#27583B' : 'transparent', color: lang.startsWith('id') ? 'white' : '#27583B' }}
       >
         ID
       </button>
