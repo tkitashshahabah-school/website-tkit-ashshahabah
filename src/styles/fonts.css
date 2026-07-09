@@ -1,6 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+/* ═══════════════════════════════════════════════════════════
+   Font Pairing:
+   · Heading  → Nunito (rounded, friendly, authoritative)
+   · Body     → Plus Jakarta Sans (modern, highly readable)
+   ═══════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 
-/* ── Floating animation ── */
+/* ── Heading font override ── */
+h1, h2, h3, h4 {
+  font-family: 'Nunito', sans-serif;
+}
+
+/* ══════════════════════════════════════════
+   ORIGINAL FLOATING ANIMATIONS (hero doodles)
+   ══════════════════════════════════════════ */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-12px); }
@@ -18,19 +30,55 @@
 .float-slow   { animation: float-slow   6s ease-in-out infinite; }
 .float-reverse{ animation: float-reverse 5s ease-in-out infinite; }
 
-/* ── AOS custom easing ── */
+/* ══════════════════════════════════════════
+   DECORATIVE FLOATING ELEMENT ANIMATIONS
+   Organic, slow movement (5–8px range) with micro-rotation (3–5deg)
+   ══════════════════════════════════════════ */
+@keyframes deco-float-a {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-8px) rotate(4deg); }
+}
+@keyframes deco-float-b {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-6px) rotate(-3deg); }
+}
+@keyframes deco-float-c {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-5px) rotate(3deg); }
+  66%       { transform: translateY(-10px) rotate(-2deg); }
+}
+@keyframes deco-float-d {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-7px) rotate(5deg); }
+}
 
-/* ── Card hover lift ── */
+.deco-float-a { animation: deco-float-a 5s   ease-in-out infinite; }
+.deco-float-b { animation: deco-float-b 4.5s ease-in-out infinite; }
+.deco-float-c { animation: deco-float-c 6s   ease-in-out infinite; }
+.deco-float-d { animation: deco-float-d 4s   ease-in-out infinite; }
+
+/* ── Responsiveness: hide decorations on mobile ── */
+@media (max-width: 768px) {
+  .floating-deco {
+    display: none !important;
+  }
+}
+
+/* ══════════════════════════════════════════
+   CARD INTERACTIONS
+   ══════════════════════════════════════════ */
+
+/* Card hover lift */
 .card-hover {
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
               box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .card-hover:hover {
   transform: translateY(-8px);
-  box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.14);
 }
 
-/* ── Photo hover lift ── */
+/* Photo hover lift */
 .photo-hover {
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
               box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -38,10 +86,10 @@
 }
 .photo-hover:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
 }
 
-/* ── Visi Misi card hover ── */
+/* Visi Misi card hover */
 .visi-misi-hover {
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
               box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -50,4 +98,9 @@
 .visi-misi-hover:hover {
   transform: translateY(-10px) scale(1.02);
   box-shadow: 0 32px 80px rgba(0,0,0,0.22);
+}
+
+/* Teacher Slider */
+.teacher-slide-enter {
+  transition: opacity 0.7s ease-in-out;
 }
