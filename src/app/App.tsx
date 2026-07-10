@@ -931,8 +931,16 @@ function TeacherSlider({ onImageClick }: { onImageClick?: (src: string, title: s
               transform: translateX(-120px) scale(0.85);
               opacity: 0.4;
            }
-           .teacher-queue-card.state-hidden-next,
-           .teacher-queue-card.state-hidden-prev,
+           .teacher-queue-card.state-hidden-next {
+              transform: translateX(250px) scale(0.5);
+              opacity: 0; 
+              visibility: hidden;
+           }
+           .teacher-queue-card.state-hidden-prev {
+              transform: translateX(-250px) scale(0.5);
+              opacity: 0; 
+              visibility: hidden;
+           }
            .teacher-queue-card.state-hidden {
               transform: translateX(0) scale(0.5);
               opacity: 0; 
