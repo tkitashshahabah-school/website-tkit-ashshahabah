@@ -977,20 +977,22 @@ function TeacherSlider({ onImageClick }: { onImageClick?: (src: string, title: s
       </button>
 
       {/* Navigation Arrows — mobile */}
-      <div className="flex justify-between sm:hidden mt-4 gap-3">
+      <div className="flex justify-center sm:hidden mt-6 gap-8 relative z-10">
         <button
           onClick={prev}
-          className="flex-1 py-2.5 rounded-full text-white text-sm font-semibold flex items-center justify-center gap-1"
+          className="w-12 h-12 rounded-full text-white flex items-center justify-center shadow-lg transition-transform active:scale-95"
           style={{ background: '#27583B' }}
+          aria-label="Sebelumnya"
         >
-          <ChevronLeft className="w-4 h-4" /> Sebelumnya
+          <ChevronLeft className="w-6 h-6" />
         </button>
         <button
           onClick={next}
-          className="flex-1 py-2.5 rounded-full text-white text-sm font-semibold flex items-center justify-center gap-1"
+          className="w-12 h-12 rounded-full text-white flex items-center justify-center shadow-lg transition-transform active:scale-95"
           style={{ background: '#27583B' }}
+          aria-label="Berikutnya"
         >
-          Berikutnya <ChevronRight className="w-4 h-4" />
+          <ChevronRight className="w-6 h-6" />
         </button>
       </div>
 
@@ -1037,13 +1039,13 @@ function TeacherSlideCard({ teacher, index, onImageClick }: { teacher: typeof TE
               src={teacher.photo}
               alt={teacher.name}
               loading="lazy"
-              className="w-[clamp(100px,25vw,150px)] h-[clamp(100px,25vw,150px)] rounded-full object-cover mx-auto shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300"
+              className="w-[160px] h-[160px] rounded-full object-cover mx-auto shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300"
               style={{ border: '3px solid rgba(255,255,255,0.4)' }}
               onClick={() => onImageClick && onImageClick(teacher.photo, teacher.name)}
             />
           ) : (
             <div
-              className="w-[clamp(100px,25vw,150px)] h-[clamp(100px,25vw,150px)] rounded-full flex items-center justify-center text-5xl font-black mx-auto shadow-lg"
+              className="w-[160px] h-[160px] rounded-full flex items-center justify-center text-5xl font-black mx-auto shadow-lg"
               style={{
                 background: 'rgba(255,255,255,0.2)',
                 color: palette.text,
