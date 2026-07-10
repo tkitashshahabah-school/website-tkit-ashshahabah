@@ -170,7 +170,7 @@ export default function App() {
               {t('nav_register')}
             </a>
 
-            <button className="lg:hidden p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            <button className="lg:hidden p-3" aria-label="Toggle Menu" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
               {mobileMenuOpen ? <X className="w-6 h-6" style={{ color: '#27583B' }} /> : <Menu className="w-6 h-6" style={{ color: '#27583B' }} />}
             </button>
           </div>
@@ -215,7 +215,7 @@ export default function App() {
       </header>
 
       {/* ═══ HERO SECTION ═════════════════════════════════════════════════════ */}
-      <section id="beranda" className="relative overflow-hidden" style={{ background: '#FFF7EE' }}>
+      <section id="beranda" className="relative overflow-hidden scroll-mt-20" style={{ background: '#FFF7EE' }}>
 
         {/* Floating Decorations */}
         <div className="floating-deco absolute right-10 bottom-32 deco-float-a" style={{ zIndex: 1, pointerEvents: 'none', opacity: 0.60 }}>
@@ -320,7 +320,7 @@ export default function App() {
       </section>
 
       {/* ═══ ABOUT SECTION ═══════════════════════════════════════════════════ */}
-      <section id="tentang" className="py-20 sm:py-28 relative overflow-hidden" style={{ background: '#FFF7EE' }}>
+      <section id="tentang" className="py-20 sm:py-28 relative overflow-hidden scroll-mt-20" style={{ background: '#FFF7EE' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div data-aos="fade-right" data-aos-duration="700">
@@ -370,7 +370,7 @@ export default function App() {
       </section>
 
       {/* ═══ MENGENAL PENDIDIK KAMI ══════════════════════════════════════════ */}
-      <section id="pendidik" className="py-24 sm:py-32 relative overflow-hidden" style={{ background: '#FFF7EE' }}>
+      <section id="pendidik" className="py-24 sm:py-32 relative overflow-hidden scroll-mt-20" style={{ background: '#FFF7EE' }}>
 
         {/* Floating Cartoon Decorations */}
         <div className="absolute top-16 left-12 w-10 h-10 opacity-50 float" style={{ zIndex: 0 }}>
@@ -504,7 +504,7 @@ export default function App() {
       </section>
 
       {/* ═══ FASILITAS SECTION ══════════════════════════════════════════════ */}
-      <section id="fasilitas" className="py-20 sm:py-28 relative overflow-hidden" style={{ background: '#FFF7EE' }}>
+      <section id="fasilitas" className="py-20 sm:py-28 relative overflow-hidden scroll-mt-20" style={{ background: '#FFF7EE' }}>
         {/* Wave Divider Top */}
         <div className="absolute top-0 left-0 right-0 transform rotate-180" style={{ zIndex: 1 }}>
           <svg viewBox="0 0 1440 100" className="w-full h-12 sm:h-20" fill="#FFFFFF" preserveAspectRatio="none">
@@ -556,7 +556,7 @@ export default function App() {
       </section>
 
       {/* ═══ ACTIVITIES SECTION ══════════════════════════════════════════════ */}
-      <section id="kegiatan" className="py-20 sm:py-28 bg-white relative overflow-hidden">
+      <section id="kegiatan" className="py-20 sm:py-28 bg-white relative overflow-hidden scroll-mt-20">
         {/* Wave Divider Top */}
         <div className="absolute top-0 left-0 right-0 transform rotate-180" style={{ zIndex: 1 }}>
           <svg viewBox="0 0 1440 100" className="w-full h-12 sm:h-20" fill="#FFF7EE" preserveAspectRatio="none">
@@ -623,7 +623,7 @@ export default function App() {
       </section>
 
       {/* ═══ FAQ SECTION ═════════════════════════════════════════════════════ */}
-      <section id="faq" className="py-20 sm:py-28 relative overflow-hidden" style={{ background: '#FFF7EE' }}>
+      <section id="faq" className="py-20 sm:py-28 relative overflow-hidden scroll-mt-20" style={{ background: '#FFF7EE' }}>
         {/* Wave Divider Top */}
         <div className="absolute top-0 left-0 right-0 transform rotate-180" style={{ zIndex: 1 }}>
           <svg viewBox="0 0 1440 100" className="w-full h-12 sm:h-20" fill="#FFFFFF" preserveAspectRatio="none">
@@ -1036,6 +1036,7 @@ function TeacherSlideCard({ teacher, index, onImageClick }: { teacher: typeof TE
             <img
               src={teacher.photo}
               alt={teacher.name}
+              loading="lazy"
               className="w-[clamp(100px,25vw,150px)] h-[clamp(100px,25vw,150px)] rounded-full object-cover mx-auto shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300"
               style={{ border: '3px solid rgba(255,255,255,0.4)' }}
               onClick={() => onImageClick && onImageClick(teacher.photo, teacher.name)}
@@ -1121,7 +1122,7 @@ function LangToggle() {
     <div className="inline-flex items-center rounded-full overflow-hidden border-2 text-xs font-bold" style={{ borderColor: '#27583B' }}>
       <button
         onClick={() => setLang('en')}
-        className="px-2.5 py-1 transition-all duration-200"
+        className="px-3 py-2 transition-all duration-200"
         style={{ background: lang.startsWith('en') ? '#27583B' : 'transparent', color: lang.startsWith('en') ? 'white' : '#27583B' }}
       >
         EN
@@ -1129,7 +1130,7 @@ function LangToggle() {
       <div className="w-px self-stretch" style={{ background: '#27583B' }}></div>
       <button
         onClick={() => setLang('id')}
-        className="px-2.5 py-1 transition-all duration-200"
+        className="px-3 py-2 transition-all duration-200"
         style={{ background: lang.startsWith('id') ? '#27583B' : 'transparent', color: lang.startsWith('id') ? 'white' : '#27583B' }}
       >
         ID
@@ -1182,7 +1183,7 @@ function FasilitasSliderCard({
   return (
     <div className="photo-hover group relative overflow-hidden rounded-3xl shadow-lg h-80 cursor-pointer" onClick={() => onImageClick && onImageClick(current)}>
       {images.map((src, i) => (
-        <img key={i} src={src} alt={`${title} ${i + 1}`} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700" style={{ opacity: i === current ? 1 : 0 }} />
+        <img key={i} src={src} alt={`${title} ${i + 1}`} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700" style={{ opacity: i === current ? 1 : 0 }} />
       ))}
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none"></div>
 
@@ -1214,7 +1215,7 @@ function FasilitasSliderCard({
 function FasilitasPhotoCard({ image, title, icon, color, large, onClick }: { image: string | any; title: string; description?: string; icon: React.ReactNode; color: string; large?: boolean; onClick?: () => void }) {
   return (
     <div className={`photo-hover group relative overflow-hidden rounded-3xl shadow-lg ${large ? 'h-80' : 'h-64'}`} onClick={onClick}>
-      <img src={image} alt={title} className="w-full h-full object-cover" />
+      <img src={image} alt={title} loading="lazy" className="w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent"></div>
       <div className="absolute top-4 left-4">
         <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-white backdrop-blur-sm" style={{ background: `${color}CC` }}>
@@ -1238,9 +1239,9 @@ function ActivityCard({ image, title, tag, onClick }: { image: string | any | (s
   return (
     <div className="photo-hover group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer" onClick={onClick}>
       {typeof currentImage === 'string' ? (
-        <ImageWithFallback src={imageSrc} alt={title} className="w-full h-64 object-cover" />
+        <ImageWithFallback src={imageSrc} alt={title} loading="lazy" className="w-full h-64 object-cover" />
       ) : (
-        <img src={imageSrc} alt={title} className="w-full h-64 object-cover" />
+        <img src={imageSrc} alt={title} loading="lazy" className="w-full h-64 object-cover" />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
 
@@ -1297,7 +1298,7 @@ function ActivitySliderCard({ images, title, tag, onImageClick }: { images: (str
   return (
     <div className="photo-hover group relative overflow-hidden rounded-2xl shadow-lg h-64 cursor-pointer" onClick={() => onImageClick && onImageClick(current)}>
       {images.map((src, i) => (
-        <img key={i} src={src} alt={`${title} ${i + 1}`} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700" style={{ opacity: i === current ? 1 : 0 }} />
+        <img key={i} src={src} alt={`${title} ${i + 1}`} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700" style={{ opacity: i === current ? 1 : 0 }} />
       ))}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none"></div>
 
