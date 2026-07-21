@@ -49,7 +49,7 @@ const TEACHERS: { name: string; initials: string; color: string; photo?: any; ro
   { name: 'Suwastini', initials: 'S', color: '#EC5F2D', photo: butiniImage, roleKey: 'role_wali_kelas_b_utsman' },
   { name: 'Fitriawati, S.Pd.I.', initials: 'FA', color: '#27583B', photo: buftriImage, roleKey: 'role_wali_kelas_b_umar' },
   { name: 'Sari Wahyuni', initials: 'RM', color: '#4E9D6A', photo: busariImage, roleKey: 'role_wali_kelas_a_ali' },
-  { name: 'Riri Priyanti, S.Pd.', initials: 'G1', color: '#27583B', photo: buririImage, roleKey: 'role_wali_kelas_b_ubaidillah' },
+  { name: 'Riri Priyanti, S.Pd.', initials: 'G1', color: '#27583B', photo: buririImage, roleKey: 'role_wali_kelas_b_abu_bakar_ash_shiddiq' },
   { name: 'Oktaviani Choirotun Nisa S.Pd', initials: 'G2', color: '#EC5F2D', photo: bunisaImage, roleKey: 'role_guru_pendamping_a_ali' },
   { name: 'Siti Maulanah S.sos', initials: 'G3', color: '#4E9D6A', photo: bulalaImage, roleKey: 'role_guru_pendamping_b_utsman' },
   { name: 'Alifia Fathihah Rahma', initials: 'G4', color: '#D4882A', photo: bualifiaImage, roleKey: 'role_guru_pendamping_b_umar' },
